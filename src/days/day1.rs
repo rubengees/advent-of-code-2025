@@ -78,35 +78,40 @@ pub fn run(input: &str) -> (String, String) {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use indoc::indoc;
 
     #[test]
     fn test_part1() {
-        let input = "L68\n\
-                           L30\n\
-                           R48\n\
-                           L5\n\
-                           R60\n\
-                           L55\n\
-                           L1\n\
-                           L99\n\
-                           R14\n\
-                           L82";
+        let input = indoc! {"
+            L68
+            L30
+            R48
+            L5
+            R60
+            L55
+            L1
+            L99
+            R14
+            L82
+        "};
 
         assert_eq!(part1(input), "3");
     }
 
     #[test]
     fn test_part2() {
-        let input = "L68\n\
-                           L30\n\
-                           R48\n\
-                           L5\n\
-                           R60\n\
-                           L55\n\
-                           L1\n\
-                           L99\n\
-                           R14\n\
-                           L82";
+        let input = indoc! {"
+            L68
+            L30
+            R48
+            L5
+            R60
+            L55
+            L1
+            L99
+            R14
+            L82
+        "};
 
         assert_eq!(part2(input), "6");
     }
