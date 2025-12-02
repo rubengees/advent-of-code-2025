@@ -14,10 +14,10 @@ pub fn part1(input: &str) -> String {
         if line.starts_with("R") {
             position = (position + rotation) % 100;
         } else {
-            position = position - rotation;
+            position -= rotation;
 
             if position < 0 {
-                position = 100 + position;
+                position += 100;
             }
         }
 
@@ -45,19 +45,19 @@ pub fn part2(input: &str) -> String {
         let rotation = count % 100;
 
         if line.starts_with("R") {
-            position = position + rotation;
+            position += rotation;
 
             if position >= 100 {
-                position = position % 100;
+                position %= 100;
                 result += 1;
             }
         } else {
             let prev_position = position;
 
-            position = position - rotation;
+            position -= rotation;
 
             if position < 0 {
-                position = 100 + position;
+                position += 100;
 
                 if prev_position > 0 {
                     result += 1;
@@ -96,7 +96,7 @@ mod tests {
     }
 
     #[test]
-    fn test_part2_1() {
+    fn test_part2() {
         let input = "L68\n\
                            L30\n\
                            R48\n\
