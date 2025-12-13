@@ -1,5 +1,5 @@
 use itertools::Itertools;
-use std::ops::RangeInclusive;
+use std::ops::{Range, RangeInclusive};
 
 pub fn part1(input: &str) -> String {
     let (raw_ranges, raw_ingredients) = input.split_once("\n\n").unwrap();
@@ -33,8 +33,18 @@ pub fn part2(input: &str) -> String {
         })
         .collect_vec();
 
-    #[allow(clippy::single_range_in_vec_init)]
-    let ranges_without_overlap = ranges
+    let ranges_without_overlap = trim_overlap(&ranges);
+
+    ranges_without_overlap
+        .iter()
+        .map(|range| range.end - range.start)
+        .sum::<u64>()
+        .to_string()
+}
+
+#[allow(clippy::single_range_in_vec_init)]
+fn trim_overlap(ranges: &[RangeInclusive<u64>]) -> Vec<Range<u64>> {
+    ranges
         .iter()
         .enumerate()
         .flat_map(|(index, range)| {
@@ -74,13 +84,7 @@ pub fn part2(input: &str) -> String {
                         .collect_vec()
                 })
         })
-        .collect_vec();
-
-    ranges_without_overlap
-        .iter()
-        .map(|range| range.end - range.start)
-        .sum::<u64>()
-        .to_string()
+        .collect_vec()
 }
 
 pub fn run(input: &str) -> (String, String) {
@@ -131,30 +135,24 @@ mod tests {
     }
 
     #[test]
-    fn test_part2_2() {
-        let input = indoc! {"
-            5-10
-            3-11
-            7-8
-            9-11
-            4-6
-            11-20
+    fn test_trim_overlap_1() {
+        let input = [5..=10, 3..=11, 7..=8, 9..=11, 4..=6, 11..=20];
 
-            1
-        "};
+        for permutation in input.iter().cloned().permutations(input.len()) {
+            let result = trim_overlap(&permutation);
+            let count = result
+                .into_iter()
+                .map(|range| range.end - range.start)
+                .sum::<u64>();
 
-        assert_eq!(part2(input), "18");
+            assert_eq!(count, 18);
+        }
     }
 
     #[test]
-    fn test_part2_3() {
-        let input = indoc! {"
-            3-5
-            3-5
+    fn test_trim_overlap_2() {
+        let input = [3..=5, 3..=5];
 
-            1
-        "};
-
-        assert_eq!(part2(input), "3");
+        assert_eq!(trim_overlap(&input), vec![3..6]);
     }
 }
