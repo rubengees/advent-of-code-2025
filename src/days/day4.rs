@@ -46,7 +46,7 @@ pub fn part2(input: &str) -> String {
             .filter(|it| can_be_removed(*it, &positions))
             .collect_vec();
 
-        if matching_positions.len() > 0 {
+        if !matching_positions.is_empty() {
             count += matching_positions.len();
 
             for x in matching_positions {
