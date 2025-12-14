@@ -5,6 +5,7 @@ mod day4;
 mod day5;
 mod day6;
 mod day7;
+mod day8;
 
 pub fn run_day(day: i32, input: &str) -> Option<(String, String)> {
     match day {
@@ -15,6 +16,7 @@ pub fn run_day(day: i32, input: &str) -> Option<(String, String)> {
         5 => Some(day5::run(input)),
         6 => Some(day6::run(input)),
         7 => Some(day7::run(input)),
+        8 => Some(day8::run(input)),
         _ => None,
     }
 }
